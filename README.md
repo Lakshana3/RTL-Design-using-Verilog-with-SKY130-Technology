@@ -2,22 +2,22 @@
 
 ## **Index**
 
-1. Introduction to Verilog RTL design and Synthesis
-	1. Introduction to open-source simulator iverilog
-		1. Introduction to iverilog design test bench
-	2. Labs using iverilog and gtkwave
-		1. Lab1 introduction to lab
+1. Introduction to Verilog RTL Design and Synthesis
+	1. Introduction to open-source simulator Iverilog
+		1. Introduction to Iverilog design test bench
+	2. Labs using Iverilog and Gtkwave
+		1. Lab1 Introduction to lab
 		2. Lab2 Introduction iverilog gtkwave part1
 		3. Lab2 Introduction iverilog gtkwave part2
 	3. Introduction to Yosys and Logic synthesis
 		1. Introduction to yosys
-		2. introduction to logic synthesis part1
-		3. introduction to logic synthesis part2
+		2. Introduction to logic synthesis part1
+		3. Introduction to logic synthesis part2
 	4. Labs using Yosys and Sky130 PDKs
 		1. Lab3 Yosys 1 good mux Part1
 		2. Lab3 Yosys 1 good mux Part2
 		3. Lab3 Yosys 1 good mux Part3
-2. Timing libs, hierarchical vs flat synthesis and efficient flop coding styles
+2. Timing libs, Hierarchical vs flat synthesis and Efficient flop coding styles
 	1. Introduction to timing .libs
 		1. Lab4 Introduction to dot Lib part1
 		2. Lab4 Introduction to dot Lib part2
@@ -25,18 +25,18 @@
 	2. Hierarchical vs Flat Synthesis
 		1. Lab5 Hier Synthesis Flat Synthesis Part1
 		2. Lab5 Hier Synthesis Flat Synthesis Part2
-	3. Various Flop Coding Styles and optimization
+	3. Various Flop Coding Styles and Optimization
 		1. Why Flops and Flop coding styles part1
 		2. Why Flops and Flop coding styles part2
 		3. Lab flop synthesis simulations part1
 		4. Lab flop synthesis simulations part2
 		5. Interesting optimisations part1
 		6. Interesting optimisations part2
-3. Combinational and sequential optimizations
-	1. Introduction to optimizations
-		1. Introduction to optimisations part1
-		2. Introduction to optimisations part2
-		3. Introduction to optimisations part3
+3. Combinational and Sequential Optimizations
+	1. Introduction to Optimizations
+		1. Introduction to Optimisations part1
+		2. Introduction to Optimisations part2
+		3. Introduction to Optimisations part3
 	2. Combinational logic optimizations
 		1. Lab06 Combinational Logic Optimisations part1
 		2. Lab06 Combinational Logic Optimisations part2
@@ -47,16 +47,16 @@
 	4. Sequential optimizations for unused outputs
 		1. Seq optimisation unused outputs part1
 		2. Seq optimisation unused outputs part2
-4. GLS, blocking vs non-blocking and Synthesis-Simulation mismatch
-	1. GLS, Synthesis-Simulation mismatch and BlockingNon-blocking statements
-		1. GLSConceptsAndFlowUsingIverilog
-		2. SynthesisSimulationMismatch
-		3. BlockingAndNonBlockingStatementsInVerilog
-		4. CaveatsWithBlockingStatements
+4. GLS, Blocking vs Non-Blocking and Synthesis-Simulation Mismatch
+	1. GLS, Synthesis-Simulation mismatch and Blocking Non-blocking statements
+		1. GLS Concepts And Flow Using Iverilog
+		2. Synthesis Simulation Mismatch
+		3. Blocking And Non-Blocking Statements In Verilog
+		4. Caveats With Blocking Statements
 	2. Labs on GLS and Synthesis-Simulation Mismatch
 		1. Lab GLS Synth Sim Mismatch part1
 		2. Lab GLS Synth Sim Mismatch part2
-	3. Labs on synth-sim mismatch for blocking statement
+	3. Labs on Synth-Sim mismatch for Blocking statement
 		1. Lab Synth sim mismatch blocking statement part1
 		2. Lab Synth sim mismatch blocking statement part2
 5. If, case, for loop and for generate
@@ -85,36 +85,36 @@
 
 ## **1. Introduction to Verilog RTL design and Synthesis**
 
-### 1. Introduction to open-source simulator iverilog
+### 1. Introduction to open-source simulator Iverilog
 
-#### 1. Introduction to iverilog design test bench
+#### 1. Introduction to Iverilog design test bench
 
-Simulator - tool used to check if the RTL design is adhering to the given spec by simulating it.
+Simulator is a tool used to check if the RTL design is adhering to the given spec by simulating it.
 The Open Source tool used here is Iverilog.
 
-RTL design - set of verilog codes which has the functionality to meet the given design specs.
+RTL design is a set of verilog codes which has the functionality to meet the given design specs.
 
-Testbench - Code used to check the functionality of the design by giving stimulus test vectors.
+Testbench is a code which is used to check the functionality of the design by giving stimulus test vectors.
 
 How does the simulator work?
 - Looks for changes on input signals
 - When input changes, the output is evaluated
-- No change in input, no change in output
+- No change in input means no change in output
 
 ![d1sk1l1_1](/images/d1sk1l1_1.png)
 
-Design can have 1/more primary inputs and 1/more primary outputs. 
-For primary inputs we need to generate stimulus and for the outputs we need to observe the stimulus. 
-Design is instantiated in testbench. Tb does not have primary inputs or outputs. 
+Design can have one/more primary inputs and one/more primary outputs. 
+For primary inputs we need to generate stimulus and we need to observe the stimulus from the outputs. 
+The design is instantiated in a testbench(Tb). Tb does not have primary inputs or outputs. 
 
 Iverilog based simulation flow:
 ![d1sk1l1_2](/images/d1sk1l1_2.png)
 
 Design and Tb are applied to iverilog. Output of it is .vcd(value change dump) file. To view the waveform and verify the design we use the gtkwave tool.
 
-### 2. Labs using iverilog and gtkwave
+### 2. Labs using Iverilog and Gtkwave
 
-#### 1. Lab1 introduction to lab
+#### 1. Lab1 Introduction to lab
 
 This section is about tool flow setup and files setup for running labs. 
 
@@ -122,14 +122,13 @@ Create VLSI folder and clone the following github repos:
 kunalg123/vsdflow
 kunalg123/sky130RTLDesignAndSynthesisWorkshop
 
-/home/lakshanaramalingam1997/VLSI/vsdflow - will install all the necessary tools for the lab
+The `/home/lakshanaramalingam1997/VLSI/vsdflow` directory will install all the necessary tools for the lab.
 
-Inside this directory 
-`/home/lakshanaramalingam1997/VLSI/sky130RTLDesignAndSynthesisWorkshop`
-my_lib contains all library files
-my_lib/lib - has sky130 std cell library using for synthesis
-my_lib/verilog_models - has std cell verilog models of std cells present in .lib
-verilog_files - contains all .v source files and tb files needed for labs
+Inside this directory `/home/lakshanaramalingam1997/VLSI/sky130RTLDesignAndSynthesisWorkshop`,
+- my_lib contains all the library files
+- my_lib/lib contains sky130 standard cell library which is used for synthesis
+- my_lib/verilog_models contains standard cell verilog models of standard cells present in .lib file
+- verilog_files contains all .v source files and tb files needed for labs
 
 ![d1sk2l1_1](/images/d1sk2l1_1.png)
 ![d1sk2l1_2](/images/d1sk2l1_2.png)
@@ -137,14 +136,13 @@ verilog_files - contains all .v source files and tb files needed for labs
 
 #### 2. Lab2 Introduction iverilog gtkwave part1
 
-How to work with iverilog and gtkwave?
+How to use Iverilog and Gtkwave?
 
-Go to design folder verilog_files and load design in iverilog using cmd 
-`iverilog design_file.v tb_design_file.v`
+Go to design folder verilog_files and load design in iverilog using cmd `iverilog design_file.v tb_design_file.v`.
 An executable file called a.out will be created.
-When it's executed, it dumps the vcd file. 
-Load the vcd file in gtkwave. 
-The testbench is seen within which the uut(unit under test) is seen. 
+When it's executed, it dumps the .vcd file. 
+Load the vcd file in gtkwave to view the waveform.
+The testbench is seen, within which the uut(unit under test) is seen. 
 The waveform shows the functionality of a MUX.
 
 ![d1sk2l2_1](/images/d1sk2l2_1.png)
@@ -153,7 +151,7 @@ The waveform shows the functionality of a MUX.
 
 #### 3. Lab2 Introduction iverilog gtkwave part2
 
-To view and edit files we use gvim editor. 
+To view and edit files we use the gvim editor. 
 Here we are seeing the design file and testbench file of 2x1 MUX(Output selects the input signal based on the sel input). 
 
 Tb instantiates the design(uut). 
@@ -168,29 +166,30 @@ No stimulus observer in this tb.
 ![d1sk2l3_3](/images/d1sk2l3_3.png)
 ![d1sk2l3_4](/images/d1sk2l3_4.png)
 
-### 3. Introduction to Yosys and Logic synthesis
+### 3. Introduction to Yosys and Logic Synthesis
 
 #### 3a. Introduction to yosys
 
-Synthesizer is a tool used for converting RTL design to netlist(representation of design in the form of .lib files(std cells) - netlist is a true representation of the design)
-The Open Source tool used is Yosys.
-Appy RTL design and .lib file to Yosys and get the netlist file.
-read_verilog to read design
-read_liberty to read .lib file -> need not be given if yosys is already invoked
-write_verilog to write out the netlist output
+Synthesizer is a tool used for converting RTL design to netlist(representation of design in the form of .lib files(std cells) - netlist is a true representation of the design).
+The Open Source tool used for synthesis is Yosys.
+Apply RTL design and .lib file to Yosys and get the netlist file.
+- read_verilog is used to read design
+- read_liberty is used to read .lib file -> need not be given if yosys is already invoked
+- write_verilog is used to write out the netlist output
 
 ![d1sk3l1_1](/images/d1sk3l1_1.png)
 
 How to verify the synthesized output?
 Use the synthesized netlist file, the testbench we used before(because primary i/p and o/p are the same) and give it as input to iverilog to generate the vcd file and simulate it using gtkwave and verify. 
-The stimulus should be the same as output observed during rtl simulation. 
+The stimulus should be the same as output observed during RTL simulation. 
 
 ![d1sk3l1_2](/images/d1sk3l1_2.png)
 
-#### 3b. introduction to logic synthesis part1
+#### 3b. Introduction to logic synthesis part1
 
-RTL design - behavioral representation of the design spec written using verilog HDL
-Synthesis maps the RTL code to digital logic ckt. 
+RTL design is a behavioral representation of the design spec written using verilog HDL.
+Synthesis 
+- maps the RTL code to digital logic ckt
 - RTL to gate level translation
 - Design is converted into gates and connections are made in between the gates
 - this is written out as netlist file
@@ -198,10 +197,10 @@ Synthesis maps the RTL code to digital logic ckt.
 ![d1sk3l2_1](/images/d1sk3l2_1.png)
 
 .lib
-- collection of all logical modules like and, or, not, inv,- rich enough implement any boolean logic functionality
+- collection of all logical modules like and, or, not, inv, etc. - rich enough implement any boolean logic functionality
 - has diff flavors of same gate (2i/p, 3i/p, slow, medium and fast versions of gates)
 	- Why? **Addpic**
-	  Combinational delay in logic path determines the max speed of op of digi logic ckt.
+	  Combinational delay in logic path determines the max speed of operation of digital logic ckt.
 	  
 ![d1sk3l2_2](/images/d1sk3l2_2.png)
 
@@ -221,11 +220,11 @@ So need to guide the synthesizer to select optimum flavor of cells for implement
 More use of fast cells -> may have hold time violations and consume more area and power
 More use of slow cells -> may result in sluggish ckt, may not meet performance 
 
-Synthesizer - 1st will do syntactical check and start to map the design.
-Module maps to top level ports of the design.
-assign -> mux
-always -> flop
-clk and reset and internal connections are made.
+A Synthesizer will first do a syntactical check and then start to map the design.
+- Module maps to top level ports of the design.
+- assign is realized as mux
+- always block is realized as a flop
+- clk and reset and internal connections are made.
 
 ![d1sk3l3_1](/images/d1sk3l3_1.png)
 
