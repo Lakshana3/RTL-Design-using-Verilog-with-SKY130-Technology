@@ -250,11 +250,11 @@ show - cmd to see logic it has realized
 ![d1sk4l1_5](/images/d1sk4l1_5.png)
 ![d1sk4l1_6](/images/d1sk4l1_6.png)
 
-**add screenshots**
+***add screenshots***
 
 #### 4b. Lab3 Yosys 1 good mux Part2
 
-**addpic**
+***addpic***
 
 The realization of 2x1 MUX.
 
@@ -267,11 +267,172 @@ write_verilog - cmd to write netlist
 - created internal nets to make connections
 - netlist representation of MUX
 - top module of netlist is what we used before
-**Addsc**
+***Addsc***
 
 ![d1sk4l3_1](/images/d1sk4l3_1.png)
 ![d1sk4l3_2](/images/d1sk4l3_2.png)
 ![d1sk4l3_3](/images/d1sk4l3_3.png)
 ![d1sk4l3_4](/images/d1sk4l3_4.png)
 
+## 2. Timing libs, hierarchical vs flat synthesis and efficient flop coding styles
+
+### 1. Introduction to timing .libs
+
+#### 1a. Lab4 Introduction to dot Lib part1
+
+This section talks about .lib file. 
+Open sky130 lib.
+:syn off - syntax off
+1st line - name of lib -> `sky130_fd_sc_hd__tt_025C_1v80`
+130nm - library
+tt - typical process -> process variations due to fabrication (PVT is mentioned in lib)
+025C - temp at which the silicon works 
+1v80 - voltage at which the silicon works
+Libraries are characterized to model the variations in PVT.
+***addsc***
+
+![d2sk1l1_1](/images/d2sk1l1_1.png)
+![d2sk1l1_2](/images/d2sk1l1_2.png)
+![d2sk1l1_3](/images/d2sk1l1_3.png)
+
+#### 1b. Lab4 Introduction to dot Lib part2
+
+The .lib file contains:
+- technology cmos
+- delay model 
+- operating units
+- operating condns -> PVT
+
+cell -> keyword cell marks beginning of cell definition
+:g// -> different flavors of same cells
+
+cell a2111o - different features of the cell
+To understand functionality check equivalent verilog model (open another file)
+.lib also has
+- area information
+- pp(powerport) information
+- describe each i/p pin - i/p C, power, transition, delay associated with pin, timing info
+
+***Addsc and gifs***
+
+![d2sk1l2_1](/images/d2sk1l2_1.png)
+![d2sk1l2_2](/images/d2sk1l2_2.png)
+![d2sk1l2_3](/images/d2sk1l2_3.png)
+![d2sk1l2_4](/images/d2sk1l2_4.png)
+![d2sk1l2_5](/images/d2sk1l2_5.png)
+![d2sk1l2_6](/images/d2sk1l2_6.png)
+![d2sk1l2_7](/images/d2sk1l2_7.png)
+![d2sk1l2_8](/images/d2sk1l2_8.png)
+![d2sk1l2_9](/images/d2sk1l2_9.png)
+![d2sk1l2_10](/images/d2sk1l2_10.png)
+![d2sk1l2_11](/images/d2sk1l2_11.png)
+![d2sk1l2_12](/images/d2sk1l2_12.png)
+![d2sk1l2_13](/images/d2sk1l2_13.png)
+![d2sk1l2_14](/images/d2sk1l2_14.png)
+![d2sk1l2_15](/images/d2sk1l2_15.png)
+![d2sk1l2_16](/images/d2sk1l2_16.png)
+![d2sk1l2_17](/images/d2sk1l2_17.png)
+![d2sk1l2_18](/images/d2sk1l2_18.png)
+![d2sk1l2_19](/images/d2sk1l2_19.png)
+![d2sk1l2_20](/images/d2sk1l2_20.gif)
+
+#### 1c. Lab4 Introduction to dot Lib part3
+
+Lets pick a smaller cell to check its different flavors.
+Picking and gate and2_0.
+Opening its verilog model.
+
+and2_0 - and2_2 - and2_4
+area < < 
+employs wider cells < <
+power < <
+delay > >
+
+![d2sk1l3_1](/images/d2sk1l3_1.png)
+![d2sk1l3_2](/images/d2sk1l3_2.png)
+![d2sk1l3_3](/images/d2sk1l3_3.png)
+![d2sk1l3_4](/images/d2sk1l3_4.png)
+![d2sk1l3_5](/images/d2sk1l3_5.png)
+![d2sk1l3_6](/images/d2sk1l3_6.png)
+![d2sk1l3_7](/images/d2sk1l3_7.png)
+![d2sk1l3_8](/images/d2sk1l3_8.png)
+
+***addsc***
+
+### 2. Hierarchical vs Flat Synthesis
+
+#### 2a. Lab05 Hier synthesis Flat synthesis part1
+
+During synthesis the number of modules and their heirarchy mentioned in the design is normally preserved. Its called Heir synthesis. 
+Lets load multiple_modules.v
+It has:
+- sub_1 and
+- sub_2 or
+- m_m -> instantiates and & or gate
+Launch yosys, read lib, read_v, synth -top mul_m (when you have multiple modules, mention the module that you want to synthesize)
+show report
+abc -lib
+show multiple_modules -> hierarchical design because hierarchies are preserved not showing underlying design. 
+write_v check netlist
+
+OR will be inferred as NAND implementation with 2 INVs i/ps
+NAND will have stacked NMOS
+NOR will have stacked PMOS which is always bad 
+PMOS has poor mobility and to improve we have to make it a light cell to get something called good logical effort.
+
+![d2sk2l1_1](/images/d2sk2l1_1.png)
+![d2sk2l1_2](/images/d2sk2l1_2.png)
+![d2sk2l1_3](/images/d2sk2l1_3.png)
+![d2sk2l1_4](/images/d2sk2l1_4.png)
+![d2sk2l1_5](/images/d2sk2l1_5.png)
+![d2sk2l1_6](/images/d2sk2l1_6.png)
+![d2sk2l1_7](/images/d2sk2l1_7.png)
+![d2sk2l1_8](/images/d2sk2l1_8.png)
+![d2sk2l1_9](/images/d2sk2l1_9.png)
+![d2sk2l1_10](/images/d2sk2l1_10.png)
+![d2sk2l1_11](/images/d2sk2l1_11.png)
+
+***addsc
+addpic***
+
+#### 2b. Lab05 Hier synthesis Flat synthesis part2
+
+Hierarchies are preserved in _hier.v 
+
+Do flatten - used to write up a flat netlist
+flatten -> shows no hierarchies hier are flattened out, directly see instantiation of gates
+write_v -noattr
+!gvim
+show both files
+show -> output is shown with the underlying components because we flattened the hierarchies
+
+To synthesize in submodule 1 level
+synth -> inferring only 1 module
+abc
+show
+seeing only the and gate
+Why submodule level synthesis?
+If there are multiple instantiations of a same component in the top module, we can synthesize the module 1 time and then replicate it multiple times in the top module.
+- When we have multiple instance of same module
+- When we want to divide and conquer approach ina massive design - doing synth portion by portion and then stitch all the netlists at the top level
+
+***Addsc***
+
+![d2sk2l2_1](/images/d2sk2l2_1.png)
+![d2sk2l2_2](/images/d2sk2l2_2.png)
+![d2sk2l2_3](/images/d2sk2l2_3.png)
+![d2sk2l2_4](/images/d2sk2l2_4.png)
+![d2sk2l2_5](/images/d2sk2l2_5.png)
+![d2sk2l2_6](/images/d2sk2l2_6.png)
+![d2sk2l2_7](/images/d2sk2l2_7.png)
+![d2sk2l2_8](/images/d2sk2l2_8.png)
+![d2sk2l2_9](/images/d2sk2l2_9.png)
+![d2sk2l2_10](/images/d2sk2l2_10.png)
+![d2sk2l2_11](/images/d2sk2l2_11.png)
+![d2sk2l2_12](/images/d2sk2l2_12.png)
+![d2sk2l2_13](/images/d2sk2l2_13.png)
+![d2sk2l2_14](/images/d2sk2l2_14.png)
+![d2sk2l2_15](/images/d2sk2l2_15.png)
+![d2sk2l2_16](/images/d2sk2l2_16.png)
+![d2sk2l2_17](/images/d2sk2l2_17.png)
 
