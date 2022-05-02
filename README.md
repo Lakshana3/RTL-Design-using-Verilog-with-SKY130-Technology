@@ -108,6 +108,7 @@ For primary inputs we need to generate stimulus and we need to observe the stimu
 The design is instantiated in a testbench(Tb). Tb does not have primary inputs or outputs. 
 
 Iverilog based simulation flow:
+
 ![d1sk1l1_2](/images/d1sk1l1_2.png)
 
 Design and Tb are applied to iverilog. Output of it is .vcd(value change dump) file. To view the waveform and verify the design we use the gtkwave tool.
@@ -124,14 +125,17 @@ kunalg123/sky130RTLDesignAndSynthesisWorkshop
 
 The `/home/lakshanaramalingam1997/VLSI/vsdflow` directory will install all the necessary tools for the lab.
 
+![d1sk2l1_1](/images/d1sk2l1_1.png)
+
 Inside this directory `/home/lakshanaramalingam1997/VLSI/sky130RTLDesignAndSynthesisWorkshop`,
 - my_lib contains all the library files
 - my_lib/lib contains sky130 standard cell library which is used for synthesis
 - my_lib/verilog_models contains standard cell verilog models of standard cells present in .lib file
+
+![d1sk2l1_2](/images/d1sk2l1_2.png)
+
 - verilog_files contains all .v source files and tb files needed for labs
 
-![d1sk2l1_1](/images/d1sk2l1_1.png)
-![d1sk2l1_2](/images/d1sk2l1_2.png)
 ![d1sk2l1_3](/images/d1sk2l1_3.png)
 
 #### 2b. Lab2 Introduction iverilog gtkwave part1
@@ -139,31 +143,39 @@ Inside this directory `/home/lakshanaramalingam1997/VLSI/sky130RTLDesignAndSynth
 How to use Iverilog and Gtkwave?
 
 Go to design folder verilog_files and load design in iverilog using cmd `iverilog design_file.v tb_design_file.v`.
+
+![d1sk2l2_1](/images/d1sk2l2_1.png)
+
 An executable file called a.out will be created.
 When it's executed, it dumps the .vcd file. 
 Load the vcd file in gtkwave to view the waveform.
+
+![d1sk2l2_2](/images/d1sk2l2_2.png)
+
 The testbench is seen, within which the uut(unit under test) is seen. 
 The waveform shows the functionality of a MUX.
 
-![d1sk2l2_1](/images/d1sk2l2_1.png)
-![d1sk2l2_2](/images/d1sk2l2_2.png)
 ![d1sk2l2_3](/images/d1sk2l2_3.png)
 
 #### 2c. Lab2 Introduction iverilog gtkwave part2
 
 To view and edit files we use the gvim editor. 
+
+![d1sk2l3_1](/images/d1sk2l3_1.png)
+
 Here we are seeing the design file and testbench file of 2x1 MUX(Output selects the input signal based on the sel input). 
+
+![d1sk2l3_2](/images/d1sk2l3_2.png)
 
 Tb instantiates the design(uut). 
 Starts dumping the vcd file.
-These are stimulus generators.
 
+![d1sk2l3_3](/images/d1sk2l3_3.png)
+
+These are stimulus generators.
 Apply stimulus to inputs - sel, i0, i1.
 No stimulus observer in this tb.
 
-![d1sk2l3_1](/images/d1sk2l3_1.png)
-![d1sk2l3_2](/images/d1sk2l3_2.png)
-![d1sk2l3_3](/images/d1sk2l3_3.png)
 ![d1sk2l3_4](/images/d1sk2l3_4.png)
 
 ### 3. Introduction to Yosys and Logic Synthesis
@@ -199,26 +211,28 @@ Synthesis
 .lib
 - collection of all logical modules like and, or, not, inv, etc. - rich enough implement any boolean logic functionality
 - has diff flavors of same gate (2i/p, 3i/p, slow, medium and fast versions of gates)
-	- Why? **Addpic**
+	- Why? 
 	  Combinational delay in logic path determines the max speed of operation of digital logic ckt.
 	  
 ![d1sk3l2_2](/images/d1sk3l2_2.png)
 
+**Addpic**
+
 #### 3c. Introduction to logic synthesis part2
 
 So why do we have slow cells in the library?
-**Addpic**
+
 Faster cells vs Slower cells:
-Load in a digital logic ckt is capacitance; so faster the charging/discharging of C, lesser is the cell delay.
-Propagation delay - time for i/p to cause change in the o/p.
-So how fast the i/p changes depends on how fast the cell can drive the i/p. 
+- Load in a digital logic ckt is capacitance; so faster the charging/discharging of C, lesser is the cell delay.
+Propagation delay is time taken for i/p to cause change in the o/p.
+- So how fast the i/p changes depends on how fast the cell can drive the i/p. 
 So larger C means slower drive strength.
-To charge/discharge the C fast, we need transistors capable of sourcing more current meaning wider transistors. 
-Wider transistors -> low delay(faster cells) -> more area and power
-Narrow transistors -> more delay(slower cells) -> less area and power
-So need to guide the synthesizer to select optimum flavor of cells for implementation of the logic ckt by giving constraints.
-More use of fast cells -> may have hold time violations and consume more area and power
-More use of slow cells -> may result in sluggish ckt, may not meet performance 
+- To charge/discharge the C fast, we need transistors capable of sourcing more current meaning wider transistors. 
+ 	- Wider transistors -> low delay(faster cells) -> more area and power
+ 	- Narrow transistors -> more delay(slower cells) -> less area and power
+- So need to guide the synthesizer to select optimum flavor of cells for implementation of the logic ckt by giving constraints.
+ 	- More use of fast cells -> may have hold time violations and consume more area and power
+	- More use of slow cells -> may result in sluggish ckt, may not meet performance 
 
 A Synthesizer will first do a syntactical check and then start to map the design.
 - Module maps to top level ports of the design.
@@ -228,25 +242,33 @@ A Synthesizer will first do a syntactical check and then start to map the design
 
 ![d1sk3l3_1](/images/d1sk3l3_1.png)
 
+**Addpic**
+
 ### 4. Labs using Yosys and Sky130 PDKs
 
 #### 4a. Lab3 Yosys 1 good mux Part1
 
-Invoke yosys.
-Read  the library and give the relative path.
+Invoke yosys using `yosys` cmd.
+Read the library and give the relative path.
+
+![d1sk4l1_1](/images/d1sk4l1_1.png)
+
 Read the verilog design file.
-synth -top -> mention what's the module we are going to synthesize
+`synth -top` -> mention what's the module we are going to synthesize
+
+![d1sk4l1_2](/images/d1sk4l1_2.png)
+![d1sk4l1_3](/images/d1sk4l1_3.png)
+
+`abc -liberty path` -> to generate netlist -> converts RTL file to gates 
+
+![d1sk4l1_4](/images/d1sk4l1_4.png)
 
 Open verilog file using gvim - mux - combinational logic - no flop present
 
-abc -lib path -> to gen netlist -> converts rtl file to gates 
-show - cmd to see logic it has realized
-
-![d1sk4l1_1](/images/d1sk4l1_1.png)
-![d1sk4l1_2](/images/d1sk4l1_2.png)
-![d1sk4l1_3](/images/d1sk4l1_3.png)
-![d1sk4l1_4](/images/d1sk4l1_4.png)
 ![d1sk4l1_5](/images/d1sk4l1_5.png)
+
+`show` - cmd to see logic it has realized
+
 ![d1sk4l1_6](/images/d1sk4l1_6.png)
 
 ***add screenshots***
@@ -259,19 +281,23 @@ The realization of 2x1 MUX.
 
 #### 4c. Lab3 Yosys 1 good mux Part3
 
-write_verilog - cmd to write netlist
--noattr -> to remove extra info to snip and give out only the necessary info
+`write_verilog` - cmd to write netlist
+
+![d1sk4l3_1](/images/d1sk4l3_1.png)
+![d1sk4l3_2](/images/d1sk4l3_2.png)
+
+`-noattr` -> to remove extra info to snip and give out only the necessary info
+
+![d1sk4l3_3](/images/d1sk4l3_3.png)
 
 - created instantiations
 - created internal nets to make connections
 - netlist representation of MUX
 - top module of netlist is what we used before
-***Addsc***
 
-![d1sk4l3_1](/images/d1sk4l3_1.png)
-![d1sk4l3_2](/images/d1sk4l3_2.png)
-![d1sk4l3_3](/images/d1sk4l3_3.png)
 ![d1sk4l3_4](/images/d1sk4l3_4.png)
+
+***Addsc***
 
 ## 2. Timing libs, hierarchical vs flat synthesis and efficient flop coding styles
 
@@ -281,18 +307,23 @@ write_verilog - cmd to write netlist
 
 This section talks about .lib file. 
 Open sky130 lib.
+
+![d2sk1l1_1](/images/d2sk1l1_1.png)
+
 :syn off - syntax off
+
+![d2sk1l1_2](/images/d2sk1l1_2.png)
+
 1st line - name of lib -> `sky130_fd_sc_hd__tt_025C_1v80`
 130nm - library
 tt - typical process -> process variations due to fabrication (PVT is mentioned in lib)
 025C - temp at which the silicon works 
 1v80 - voltage at which the silicon works
 Libraries are characterized to model the variations in PVT.
-***addsc***
 
-![d2sk1l1_1](/images/d2sk1l1_1.png)
-![d2sk1l1_2](/images/d2sk1l1_2.png)
 ![d2sk1l1_3](/images/d2sk1l1_3.png)
+
+***addsc***
 
 #### 1b. Lab4 Introduction to dot Lib part2
 
@@ -302,58 +333,65 @@ The .lib file contains:
 - operating units
 - operating condns -> PVT
 
-cell -> keyword cell marks beginning of cell definition
-:g// -> different flavors of same cells
+![d2sk1l2_1](/images/d2sk1l2_1.png)
+![d2sk1l2_2](/images/d2sk1l2_2.png)
 
+cell -> keyword cell marks beginning of cell definition
+
+![d2sk1l2_3](/images/d2sk1l2_3.png)
+
+:g// -> different flavors of same cells
 cell a2111o - different features of the cell
-To understand functionality check equivalent verilog model (open another file)
+
+![d2sk1l2_7](/images/d2sk1l2_7.png)
+
 .lib also has
 - area information
 - pp(powerport) information
 - describe each i/p pin - i/p C, power, transition, delay associated with pin, timing info
 
-***Addsc and gifs***
-
-![d2sk1l2_1](/images/d2sk1l2_1.png)
-![d2sk1l2_2](/images/d2sk1l2_2.png)
-![d2sk1l2_3](/images/d2sk1l2_3.png)
-![d2sk1l2_4](/images/d2sk1l2_4.png)
-![d2sk1l2_5](/images/d2sk1l2_5.png)
-![d2sk1l2_6](/images/d2sk1l2_6.png)
-![d2sk1l2_7](/images/d2sk1l2_7.png)
-![d2sk1l2_8](/images/d2sk1l2_8.png)
 ![d2sk1l2_9](/images/d2sk1l2_9.png)
+
+To understand functionality check equivalent verilog model (open another file).
+
 ![d2sk1l2_10](/images/d2sk1l2_10.png)
 ![d2sk1l2_11](/images/d2sk1l2_11.png)
+
 ![d2sk1l2_12](/images/d2sk1l2_12.png)
 ![d2sk1l2_13](/images/d2sk1l2_13.png)
 ![d2sk1l2_14](/images/d2sk1l2_14.png)
 ![d2sk1l2_15](/images/d2sk1l2_15.png)
 ![d2sk1l2_16](/images/d2sk1l2_16.png)
 ![d2sk1l2_17](/images/d2sk1l2_17.png)
-![d2sk1l2_18](/images/d2sk1l2_18.png)
 ![d2sk1l2_19](/images/d2sk1l2_19.png)
 ![d2sk1l2_20](/images/d2sk1l2_20.gif)
+
+***Addsc***
 
 #### 1c. Lab4 Introduction to dot Lib part3
 
 Lets pick a smaller cell to check its different flavors.
 Picking and gate and2_0.
-Opening its verilog model.
-
-and2_0 - and2_2 - and2_4
-area < < 
-employs wider cells < <
-power < <
-delay > >
 
 ![d2sk1l3_1](/images/d2sk1l3_1.png)
+
+Opening its verilog model.
+
 ![d2sk1l3_2](/images/d2sk1l3_2.png)
 ![d2sk1l3_3](/images/d2sk1l3_3.png)
 ![d2sk1l3_4](/images/d2sk1l3_4.png)
 ![d2sk1l3_5](/images/d2sk1l3_5.png)
 ![d2sk1l3_6](/images/d2sk1l3_6.png)
+
+and2_0 - and2_2 - and2_4
+area < < 
+
 ![d2sk1l3_7](/images/d2sk1l3_7.png)
+
+employs wider cells < <
+power < <
+delay > >
+
 ![d2sk1l3_8](/images/d2sk1l3_8.png)
 
 ***addsc***
@@ -364,32 +402,42 @@ delay > >
 
 During synthesis the number of modules and their heirarchy mentioned in the design is normally preserved. Its called Heir synthesis. 
 Lets load multiple_modules.v
+
+![d2sk2l1_1](/images/d2sk2l1_1.png)
+
 It has:
 - sub_1 and
 - sub_2 or
 - m_m -> instantiates and & or gate
+
+![d2sk2l1_2](/images/d2sk2l1_2.png)
+
 Launch yosys, read lib, read_v, synth -top mul_m (when you have multiple modules, mention the module that you want to synthesize)
+
+![d2sk2l1_3](/images/d2sk2l1_3.png)
+
 show report
 abc -lib
+
+![d2sk2l1_4](/images/d2sk2l1_4.png)
+![d2sk2l1_5](/images/d2sk2l1_5.png)
+
 show multiple_modules -> hierarchical design because hierarchies are preserved not showing underlying design. 
+
+![d2sk2l1_6](/images/d2sk2l1_6.png)
+![d2sk2l1_7](/images/d2sk2l1_7.png)
+![d2sk2l1_8](/images/d2sk2l1_8.png)
+
 write_v check netlist
+
+![d2sk2l1_9](/images/d2sk2l1_9.png)
+![d2sk2l1_10](/images/d2sk2l1_10.png)
+![d2sk2l1_11](/images/d2sk2l1_11.png)
 
 OR will be inferred as NAND implementation with 2 INVs i/ps
 NAND will have stacked NMOS
 NOR will have stacked PMOS which is always bad 
 PMOS has poor mobility and to improve we have to make it a light cell to get something called good logical effort.
-
-![d2sk2l1_1](/images/d2sk2l1_1.png)
-![d2sk2l1_2](/images/d2sk2l1_2.png)
-![d2sk2l1_3](/images/d2sk2l1_3.png)
-![d2sk2l1_4](/images/d2sk2l1_4.png)
-![d2sk2l1_5](/images/d2sk2l1_5.png)
-![d2sk2l1_6](/images/d2sk2l1_6.png)
-![d2sk2l1_7](/images/d2sk2l1_7.png)
-![d2sk2l1_8](/images/d2sk2l1_8.png)
-![d2sk2l1_9](/images/d2sk2l1_9.png)
-![d2sk2l1_10](/images/d2sk2l1_10.png)
-![d2sk2l1_11](/images/d2sk2l1_11.png)
 
 ***addsc
 addpic***
@@ -398,18 +446,41 @@ addpic***
 
 Hierarchies are preserved in _hier.v 
 
+![d2sk2l2_1](/images/d2sk2l2_1.png)
+![d2sk2l2_2](/images/d2sk2l2_2.png)
+
 Do flatten - used to write up a flat netlist
 flatten -> shows no hierarchies hier are flattened out, directly see instantiation of gates
-write_v -noattr
+
+![d2sk2l2_3](/images/d2sk2l2_3.png)
+![d2sk2l2_4](/images/d2sk2l2_4.png)
+![d2sk2l2_5](/images/d2sk2l2_5.png)
+
+write_v -noattr	
 !gvim
 show both files
 show -> output is shown with the underlying components because we flattened the hierarchies
+
+![d2sk2l2_6](/images/d2sk2l2_6.png)
+![d2sk2l2_7](/images/d2sk2l2_7.png)
+![d2sk2l2_8](/images/d2sk2l2_8.png)
+![d2sk2l2_9](/images/d2sk2l2_9.png)
+![d2sk2l2_10](/images/d2sk2l2_10.png)
+![d2sk2l2_11](/images/d2sk2l2_11.png)
 
 To synthesize in submodule 1 level
 synth -> inferring only 1 module
 abc
 show
 seeing only the and gate
+
+![d2sk2l2_12](/images/d2sk2l2_12.png)
+![d2sk2l2_13](/images/d2sk2l2_13.png)
+![d2sk2l2_14](/images/d2sk2l2_14.png)
+![d2sk2l2_15](/images/d2sk2l2_15.png)
+![d2sk2l2_16](/images/d2sk2l2_16.png)
+![d2sk2l2_17](/images/d2sk2l2_17.png)
+
 Why submodule level synthesis?
 If there are multiple instantiations of a same component in the top module, we can synthesize the module 1 time and then replicate it multiple times in the top module.
 - When we have multiple instance of same module
@@ -417,23 +488,9 @@ If there are multiple instantiations of a same component in the top module, we c
 
 ***Addsc***
 
-![d2sk2l2_1](/images/d2sk2l2_1.png)
-![d2sk2l2_2](/images/d2sk2l2_2.png)
-![d2sk2l2_3](/images/d2sk2l2_3.png)
-![d2sk2l2_4](/images/d2sk2l2_4.png)
-![d2sk2l2_5](/images/d2sk2l2_5.png)
-![d2sk2l2_6](/images/d2sk2l2_6.png)
-![d2sk2l2_7](/images/d2sk2l2_7.png)
-![d2sk2l2_8](/images/d2sk2l2_8.png)
-![d2sk2l2_9](/images/d2sk2l2_9.png)
-![d2sk2l2_10](/images/d2sk2l2_10.png)
-![d2sk2l2_11](/images/d2sk2l2_11.png)
-![d2sk2l2_12](/images/d2sk2l2_12.png)
-![d2sk2l2_13](/images/d2sk2l2_13.png)
-![d2sk2l2_14](/images/d2sk2l2_14.png)
-![d2sk2l2_15](/images/d2sk2l2_15.png)
-![d2sk2l2_16](/images/d2sk2l2_16.png)
-![d2sk2l2_17](/images/d2sk2l2_17.png)
+
+
+
 
 ----------------------------------------------------------------------------------------------------------------------------------------
 ### 3. Various Flop Coding Styles and optimization
@@ -455,12 +512,20 @@ addsc***
 Flop with async res
 async set
 
+![d2sk3l2_1](/images/d2sk3l2_1.png)
+![d2sk3l2_3](/images/d2sk3l2_3.png)
+
 Sync set -> Sync will come in D pin of flop
 Sync res waits for clk -> always block only evaluates on posedge of clk
+
+![d2sk3l2_4](/images/d2sk3l2_4.png)
 
 Both reset and set are there then they may cause race conditions.
 
 Both sync and async res, 
+
+![d2sk3l2_5](/images/d2sk3l2_5.png)
+
 ***addpic addsc***
 
 #### 3c. Lab flop synthesis simulations part1
@@ -471,16 +536,39 @@ reset when low before clk
 q is sync to clk
 when reset is 1, immediately q goes low.
 
+![d2sk3l3_1](/images/d2sk3l3_1.png)
+![d2sk3l3_2](/images/d2sk3l3_2.png)
+![d2sk3l3_3](/images/d2sk3l3_3.png)
+![d2sk3l3_4](/images/d2sk3l3_4.png)
+
 asynset
 rtl simul
 upon edge of clk, changes in d are seen on q
 but when the set is true, irrespective of clk, q goes 1 till the set is true.
 
+![d2sk3l3_5](/images/d2sk3l3_5.png)
+![d2sk3l3_6](/images/d2sk3l3_6.png)
+![d2sk3l3_7](/images/d2sk3l3_7.png)
+![d2sk3l3_8](/images/d2sk3l3_8.png)
+![d2sk3l3_9](/images/d2sk3l3_9.png)
+![d2sk3l3_10](/images/d2sk3l3_10.png)
+![d2sk3l3_11](/images/d2sk3l3_11.png)
+
 syncres
 rtl simul
 When reset is 1, q waits for posedge clk and goes 0.
 
-addsc
+![d2sk3l3_12](/images/d2sk3l3_12.png)
+![d2sk3l3_13](/images/d2sk3l3_13.png)
+![d2sk3l3_14](/images/d2sk3l3_14.png)
+![d2sk3l3_15](/images/d2sk3l3_15.png)
+![d2sk3l3_16](/images/d2sk3l3_16.png)
+![d2sk3l3_17](/images/d2sk3l3_17.png)
+![d2sk3l3_18](/images/d2sk3l3_18.png)
+![d2sk3l3_19](/images/d2sk3l3_19.png)
+![d2sk3l3_20](/images/d2sk3l3_20.png)
+![d2sk3l3_21](/images/d2sk3l3_21.png)
+![d2sk3l3_22](/images/d2sk3l3_22.png)
 
 #### 3d. Lab flop synthesis simulations part2
 
@@ -490,11 +578,35 @@ dfflibmap - usually there will be a separate flop lib under std cell library so 
 show
 flop has active low reset so inv is used
 
+![d2sk3l4_1](/images/d2sk3l4_1.png)
+![d2sk3l4_2](/images/d2sk3l4_2.png)
+![d2sk3l4_3](/images/d2sk3l4_3.png)
+![d2sk3l4_4](/images/d2sk3l4_4.png)
+![d2sk3l4_5](/images/d2sk3l4_5.png)
+![d2sk3l4_6](/images/d2sk3l4_6.png)
+
 aynsc set
+
+![d2sk3l4_7](/images/d2sk3l4_7.png)
+![d2sk3l4_8](/images/d2sk3l4_8.png)
+![d2sk3l4_9](/images/d2sk3l4_9.png)
+![d2sk3l4_10](/images/d2sk3l4_10.png)
+![d2sk3l4_11](/images/d2sk3l4_11.png)
+![d2sk3l4_12](/images/d2sk3l4_12.png)
 
 syncres -> 
 
-addpic addsc
+![d2sk3l4_13](/images/d2sk3l4_13.png)
+![d2sk3l4_14](/images/d2sk3l4_14.png)
+![d2sk3l4_15](/images/d2sk3l4_15.png)
+![d2sk3l4_16](/images/d2sk3l4_16.png)
+![d2sk3l4_17](/images/d2sk3l4_17.png)
+![d2sk3l4_18](/images/d2sk3l4_18.png)
+![d2sk3l4_19](/images/d2sk3l4_19.png)
+![d2sk3l4_20](/images/d2sk3l4_20.png)
+![d2sk3l4_21](/images/d2sk3l4_21.png)
+
+****addpic addsc***
 
 #### 3e. Interesting optimisations part1
 
@@ -502,8 +614,15 @@ mult2
 yosys
 show
 
-addpic
-addsc
+![d2sk3l5_1](/images/d2sk3l5_1.png)
+![d2sk3l5_2](/images/d2sk3l5_2.png)
+![d2sk3l5_3](/images/d2sk3l5_3.png)
+![d2sk3l5_4](/images/d2sk3l5_4.png)
+![d2sk3l5_5](/images/d2sk3l5_5.png)
+![d2sk3l5_6](/images/d2sk3l5_6.png)
+
+***addpic
+addsc***
 
 #### 3f. Interesting optimisations part2
 
@@ -511,15 +630,24 @@ a 3bit y 6bit
 write_v mult2
 gvim
 
+![d2sk3l6_1](/images/d2sk3l6_1.png)
+![d2sk3l6_2](/images/d2sk3l6_2.png)
+
 read_v mult8
 write_v 
 
-addpic addsc
+![d2sk3l6_3](/images/d2sk3l6_3.png)
+![d2sk3l6_4](/images/d2sk3l6_4.png)
+![d2sk3l6_5](/images/d2sk3l6_5.png)
+![d2sk3l6_6](/images/d2sk3l6_6.png)
 
-## 3. Combinational and sequential optimizations
+***addpic addsc***
 
-### 1. Introduction to optimizations
-#### 1a. Introduction to optimisations part1
+## 3. Combinational and Sequential Optimizations
+
+### 1. Introduction to Optimizations
+
+#### 1a. Introduction to Optimisations part1
 
 Combinational logic optimization: why?
 - to squeeze logic to get most optimized design in terms of area and power
@@ -532,7 +660,11 @@ Constant propagation:
 Boolean logic optimization:
 
 Synth tool does these kind of optimization to get the most optimized logic
-Sc-draw pics
+
+![d3sk1l1_1](/images/d3sk1l1_1.png)
+![d3sk1l1_2](/images/d3sk1l1_2.png)
+
+***Sc-draw pics***
 
 #### 1b. Introduction to optimisations part2
 
@@ -546,12 +678,18 @@ Sequential logic optimizations techniques:
 
 Sequential constant propagation:
 Q is always 0 so y is always 1 irrespective of clk, reset.
-sc-pic
+
+***sc-pic***
+
+![d3sk1l2_1](/images/d3sk1l2_1.png)
 
 Set flop:
 When set=1, Q=1 else 0 so q takes both values so this can't be optimized so the logic will be retained as such (coz q does not take constant value)
 Q is not= !set
-sc-pic
+
+![d3sk1l2_2](/images/d3sk1l2_2.png)
+
+***sc-pic***
 
 #### 1c. Introduction to optimisations part3
 
@@ -568,7 +706,9 @@ Retiming:
 - some portion of  the logic is splitted between flops to have approx equal delay to improve performance
 - partitioning logic and useful slack to increase freq of op of ckt
 
-sc-pic
+![d3sk1l3_1](/images/d3sk1l3_1.png)
+
+***sc-pic***
 
 ### 2. Combinational logic optimizations
 
@@ -576,52 +716,142 @@ sc-pic
 
 opt files
 optcheck 
+
+![d3sk2l1_16](/images/d3sk2l1_16.png)
+
 optcheck2 redundancy
 
+![d3sk2l1_1](/images/d3sk2l1_1.png)
+![d3sk2l1_2](/images/d3sk2l1_2.png)
+
+optcheck
 yosys
 opt_clean -purge -> cmd to do optimization - all optimizations are done
 show
-
 show - nand realization of or
 
-addsc addpic
+![d3sk2l1_3](/images/d3sk2l1_3.png)
+![d3sk2l1_4](/images/d3sk2l1_4.png)
+![d3sk2l1_5](/images/d3sk2l1_5.png)
+![d3sk2l1_6](/images/d3sk2l1_6.png)
+![d3sk2l1_7](/images/d3sk2l1_7.png)
+![d3sk2l1_8](/images/d3sk2l1_8.png)
+
+optcheck2
+
+![d3sk2l1_9](/images/d3sk2l1_9.png)
+![d3sk2l1_10](/images/d3sk2l1_10.png)
+![d3sk2l1_11](/images/d3sk2l1_11.png)
+![d3sk2l1_12](/images/d3sk2l1_12.png)
+![d3sk2l1_13](/images/d3sk2l1_13.png)
+![d3sk2l1_14](/images/d3sk2l1_14.png)
+![d3sk2l1_15](/images/d3sk2l1_15.png)
+
+***addsc addpic***
 
 #### 2b. Lab06 Combinational Logic Optimisations part2
 
 optcheck3
 yosys
 
-addpic
+![d3sk2l2_39](/images/d3sk2l2_39.png)
+![d3sk2l2_1](/images/d3sk2l2_1.png)
+![d3sk2l2_2](/images/d3sk2l2_2.png)
+![d3sk2l2_3](/images/d3sk2l2_3.png)
+![d3sk2l2_4](/images/d3sk2l2_4.png)
+![d3sk2l2_5](/images/d3sk2l2_5.png)
+![d3sk2l2_6](/images/d3sk2l2_6.png)
+
+***addpic***
 
 optcheck4
+
+![d3sk2l2_7](/images/d3sk2l2_7.png)
+![d3sk2l2_8](/images/d3sk2l2_8.png)
+![d3sk2l2_9](/images/d3sk2l2_9.png)
+![d3sk2l2_10](/images/d3sk2l2_10.png)
+![d3sk2l2_11](/images/d3sk2l2_11.png)
+![d3sk2l2_12](/images/d3sk2l2_12.png)
+
+mmopt
+
+![d3sk2l2_13](/images/d3sk2l2_13.png)
+![d3sk2l2_14](/images/d3sk2l2_14.png)
+![d3sk2l2_15](/images/d3sk2l2_15.png)
+![d3sk2l2_17](/images/d3sk2l2_17.png)
+![d3sk2l2_18](/images/d3sk2l2_18.png)
+![d3sk2l2_19](/images/d3sk2l2_19.png)
+![d3sk2l2_20](/images/d3sk2l2_20.png)
+
+![d3sk2l2_21](/images/d3sk2l2_21.png)
+![d3sk2l2_23](/images/d3sk2l2_23.png)
+![d3sk2l2_24](/images/d3sk2l2_24.png)
 
 mmopt5
 flatten
 opt_clean
 
-drawpicfor4and5 addsc
+![d3sk2l2_31](/images/d3sk2l2_31.png)
+![d3sk2l2_32](/images/d3sk2l2_32.png)
+![d3sk2l2_33](/images/d3sk2l2_33.png)
+![d3sk2l2_34](/images/d3sk2l2_34.png)
+![d3sk2l2_35](/images/d3sk2l2_35.png)
+![d3sk2l2_36](/images/d3sk2l2_36.png)
+![d3sk2l2_37](/images/d3sk2l2_37.png)
+![d3sk2l2_38](/images/d3sk2l2_38.png)
+
+<!--
+![d3sk2l2_25](/images/d3sk2l2_25.png)
+![d3sk2l2_26](/images/d3sk2l2_26.png)
+![d3sk2l2_27](/images/d3sk2l2_27.png)
+![d3sk2l2_28](/images/d3sk2l2_28.png)
+![d3sk2l2_29](/images/d3sk2l2_29.png)
+![d3sk2l2_30](/images/d3sk2l2_30.png)
+-->
+
+***drawpicfor4and5 addsc***
 
 ### 3. Sequential logic optimizations
 
 #### 3a. Lab07 Sequential Logic Optimisations part1
 
 dff_const
+
+![d3sk3l1_1](/images/d3sk3l1_1.png)
+![d3sk3l1_2](/images/d3sk3l1_2.png)
+![d3sk3l1_3](/images/d3sk3l1_3.png)
+
 1.v
 Q becomes 1 at posedge of clk
 Rst may get deasserted anywhere here but Q will wait for posedge of clk
+
+![d3sk3l1_4](/images/d3sk3l1_4.png)
+![d3sk3l1_5](/images/d3sk3l1_5.png)
+![d3sk3l1_6](/images/d3sk3l1_6.png)
 
 2.v
 Q will always be 1
 
 RTL simul
+
+![d3sk3l1_7](/images/d3sk3l1_7.png)
+![d3sk3l1_8](/images/d3sk3l1_8.png)
+![d3sk3l1_9](/images/d3sk3l1_9.png)
+
 synth
-
 dfflibmap - for seq ckts have separate libs usually but here it is the same lib so mention it to tell the synth where to choose the libs from
-
 till show for dff_const1
 
-drawpicfromsc
-addsc
+![d3sk3l1_10](/images/d3sk3l1_10.png)
+![d3sk3l1_11](/images/d3sk3l1_11.png)
+![d3sk3l1_12](/images/d3sk3l1_12.png)
+![d3sk3l1_13](/images/d3sk3l1_13.png)
+![d3sk3l1_14](/images/d3sk3l1_14.png)
+![d3sk3l1_15](/images/d3sk3l1_15.png)
+![d3sk3l1_16](/images/d3sk3l1_16.png)
+
+***drawpicfromsc
+addsc***
 
 #### 3b. Lab07 Sequential Logic Optimisations part2
 
@@ -629,23 +859,74 @@ from read_v for dffconst2
 when synth of dffconst1 it has inferred a dff
 now it has not inferred any flop or cells
 
+![d3sk3l2_5](/images/d3sk3l2_5.png)
+![d3sk3l2_6](/images/d3sk3l2_6.png)
+![d3sk3l2_7](/images/d3sk3l2_7.png)
+![d3sk3l2_8](/images/d3sk3l2_8.png)
+![d3sk3l2_9](/images/d3sk3l2_9.png)
+![d3sk3l2_10](/images/d3sk3l2_10.png)
+
 more examples
 const3 gvim
 
-drawpicfromsc addsc
+![d3sk3l2_1](/images/d3sk3l2_1.png)
+![d3sk3l2_2](/images/d3sk3l2_2.png)
+![d3sk3l2_3](/images/d3sk3l2_3.png)
+
+<!-- ![d3sk3l2_4](/images/d3sk3l2_4.png) -->
+
+***drawpicfromsc addsc***
 
 #### 3c. Lab07 Sequential Logic Optimisations part3
 
 rtl simul for const3
 Q1 is not primary output, its and internal signal so get it from uut
 
+![d3sk3l3_1](/images/d3sk3l3_1.png)
+![d3sk3l3_2](/images/d3sk3l3_2.png)
+![d3sk3l3_3](/images/d3sk3l3_3.png)
+![d3sk3l3_4](/images/d3sk3l3_4.png)
+![d3sk3l3_5](/images/d3sk3l3_5.png)
+
 Synth
 dfflibmap mela highlight
 
-addsc
+![d3sk3l3_6](/images/d3sk3l3_6.png)
+![d3sk3l3_7](/images/d3sk3l3_7.png)
+![d3sk3l3_8](/images/d3sk3l3_8.png)
+![d3sk3l3_9](/images/d3sk3l3_9.png)
+![d3sk3l3_10](/images/d3sk3l3_10.png)
+![d3sk3l3_11](/images/d3sk3l3_11.png)
 
-dffconst4and5
-Drawpicfor4and5 addsc
+***addsc***
+
+dffconst4
+
+![d3sk3l3_12](/images/d3sk3l3_12.png)
+![d3sk3l3_13](/images/d3sk3l3_13.png)
+![d3sk3l3_14](/images/d3sk3l3_14.png)
+![d3sk3l3_15](/images/d3sk3l3_15.png)
+![d3sk3l3_16](/images/d3sk3l3_16.png)
+![d3sk3l3_17](/images/d3sk3l3_17.png)
+![d3sk3l3_18](/images/d3sk3l3_18.png)
+![d3sk3l3_19](/images/d3sk3l3_19.png)
+![d3sk3l3_20](/images/d3sk3l3_20.png)
+![d3sk3l3_21](/images/d3sk3l3_21.png)
+
+dffconst5
+
+![d3sk3l3_22](/images/d3sk3l3_22.png)
+![d3sk3l3_23](/images/d3sk3l3_23.png)
+![d3sk3l3_24](/images/d3sk3l3_24.png)
+![d3sk3l3_25](/images/d3sk3l3_25.png)
+![d3sk3l3_26](/images/d3sk3l3_26.png)
+![d3sk3l3_27](/images/d3sk3l3_27.png)
+![d3sk3l3_28](/images/d3sk3l3_28.png)
+![d3sk3l3_29](/images/d3sk3l3_29.png)
+![d3sk3l3_30](/images/d3sk3l3_30.png)
+![d3sk3l3_31](/images/d3sk3l3_31.png)
+
+***Drawpicfor4and5 addsc***
 
 ### 4. Sequential optimizations for unused outputs
 
@@ -655,20 +936,50 @@ counter_opt - 3 bit up counter
 count[0] toggles on every clk cycle and other outputs are unused
 yosys
 show
-
 Any logic which is not having any relation with the outputs will be optimized by the synthesizer. 
 
-sc-pic addsc
+![d3sk4l1_1](/images/d3sk4l1_1.png)
+![d3sk4l1_2](/images/d3sk4l1_2.png)
+![d3sk4l1_3](/images/d3sk4l1_3.png)
+![d3sk4l1_4](/images/d3sk4l1_4.png)
+![d3sk4l1_5](/images/d3sk4l1_5.png)
+![d3sk4l1_6](/images/d3sk4l1_6.png)
+![d3sk4l1_7](/images/d3sk4l1_7.png)
+![d3sk4l1_8](/images/d3sk4l1_8.png)
+![d3sk4l1_9](/images/d3sk4l1_9.png)
+![d3sk4l1_10](/images/d3sk4l1_10.png)
+
+<!-- ![d3sk4l1_11](/images/d3sk4l1_11.png)
+![d3sk4l1_12](/images/d3sk4l1_12.png) -->
+
+****sc-pic addsc***
 
 #### 4b. Seq optimisation unused outputs part2
 
 Modify rtl -> counteropt2
 Using all the 3 bits so 3 flops will be present.
-yosys
 
+![d3sk4l2_1](/images/d3sk4l2_1.png)
+![d3sk4l2_2](/images/d3sk4l2_2.png)
+![d3sk4l2_3](/images/d3sk4l2_3.png)
+![d3sk4l2_4](/images/d3sk4l2_4.png)
+
+yosys
 logic feeding those intermediary o/ps will also be optimized away
 
-sc-pic addsc
+![d3sk4l2_5](/images/d3sk4l2_5.png)
+![d3sk4l2_6](/images/d3sk4l2_6.png)
+![d3sk4l2_7](/images/d3sk4l2_7.png)
+![d3sk4l2_8](/images/d3sk4l2_8.png)
+![d3sk4l2_9](/images/d3sk4l2_9.png)
+![d3sk4l2_10](/images/d3sk4l2_10.png)
+![d3sk4l2_13](/images/d3sk4l2_13.png)
+
+<!--![d3sk4l2_11](/images/d3sk4l2_11.png)
+![d3sk4l2_12](/images/d3sk4l2_12.png)
+![d3sk4l2_14](/images/d3sk4l2_14.png)-->
+
+***sc-pic addsc***
 
 ## 4. GLS, blocking vs non-blocking and Synthesis-Simulation mismatch
 
