@@ -87,7 +87,7 @@
 
 ### 1. Introduction to open-source simulator Iverilog
 
-#### 1. Introduction to Iverilog design test bench
+#### 1a. Introduction to Iverilog design test bench
 
 Simulator is a tool used to check if the RTL design is adhering to the given spec by simulating it.
 The Open Source tool used here is Iverilog.
@@ -114,7 +114,7 @@ Design and Tb are applied to iverilog. Output of it is .vcd(value change dump) f
 
 ### 2. Labs using Iverilog and Gtkwave
 
-#### 1. Lab1 Introduction to lab
+#### 2a. Lab1 Introduction to lab
 
 This section is about tool flow setup and files setup for running labs. 
 
@@ -134,7 +134,7 @@ Inside this directory `/home/lakshanaramalingam1997/VLSI/sky130RTLDesignAndSynth
 ![d1sk2l1_2](/images/d1sk2l1_2.png)
 ![d1sk2l1_3](/images/d1sk2l1_3.png)
 
-#### 2. Lab2 Introduction iverilog gtkwave part1
+#### 2b. Lab2 Introduction iverilog gtkwave part1
 
 How to use Iverilog and Gtkwave?
 
@@ -149,7 +149,7 @@ The waveform shows the functionality of a MUX.
 ![d1sk2l2_2](/images/d1sk2l2_2.png)
 ![d1sk2l2_3](/images/d1sk2l2_3.png)
 
-#### 3. Lab2 Introduction iverilog gtkwave part2
+#### 2c. Lab2 Introduction iverilog gtkwave part2
 
 To view and edit files we use the gvim editor. 
 Here we are seeing the design file and testbench file of 2x1 MUX(Output selects the input signal based on the sel input). 
