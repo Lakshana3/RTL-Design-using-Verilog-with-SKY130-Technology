@@ -488,11 +488,6 @@ If there are multiple instantiations of a same component in the top module, we c
 
 ***Addsc***
 
-
-
-
-
-----------------------------------------------------------------------------------------------------------------------------------------
 ### 3. Various Flop Coding Styles and optimization
 
 #### 3a. Why Flops and Flop coding styles part1
@@ -981,9 +976,9 @@ logic feeding those intermediary o/ps will also be optimized away
 
 ***sc-pic addsc***
 
-## 4. GLS, blocking vs non-blocking and Synthesis-Simulation mismatch
+## 4. GLS, Blocking vs Non-Blocking and Synthesis-Simulation Mismatch
 
-### 1. GLS, Synthesis-Simulation mismatch and BlockingNon-blocking statements
+### 1. GLS, Synthesis-Simulation mismatch and Blocking Non-blocking statements
 
 #### 1a. GLS Concepts And Flow Using Iverilog
 
@@ -991,15 +986,21 @@ GLS - gate level simulation
 Validated RTL code by simulating it with testbench
 Now use netlist as dut and run testbench which is same because netlist is logically same as RTL code
 
+![d4sk1l1_1](/images/d4sk1l1_1.png)
+
 Why GLS?
 - verify logical correctness of design after synthesis
 - ensuring timing of design is met (for this, run GLS with delay annotation)
+
+![d4sk1l1_2](/images/d4sk1l1_2.png)
 
 GLS using Iverilog:
 Design(netlist), gate level verilog models(needed because meaning of std cells need to be defined to the tool), testbench
 Gate level verilog model can be functional or timing aware(if they are then check timing validation)
 
-sc-pic
+![d4sk1l1_3](/images/d4sk1l1_3.png)
+
+***sc-pic***
 
 #### 1b. Synthesis Simulation Mismatch
 
@@ -1014,7 +1015,9 @@ how does the simulator work? - o/p changes only when there is change in i/p - si
 
 Synthesizer doesn't look at the sensitivity list. It'll only look at the functionality which is mux. 
 
-sc-pic
+![d4sk1l2_1](/images/d4sk1l2_1.png)
+
+***sc-pic***
 
 #### 1c. Blocking And NonBlocking Statements In Verilog
 
@@ -1035,7 +1038,9 @@ Shift reg
 2 flops:- q=q0 and q0=d
 q0=d and q=q0 - q0 already has recent value of d - only 1 flop
 
-sc-pic
+![d4sk1l3_1](/images/d4sk1l3_1.png)
+
+***sc-pic***
 
 #### 1d. Caveats With Blocking Statements
 
@@ -1048,7 +1053,10 @@ mimic a flop in a combi ckt but when we synth there'll be no flop
 
 Bcoz of these, we need to run GLS on netlist and match that with expected o/pp and see there are no synth-sim mismatches.
 
-sc-pic
+![d4sk1l4_1](/images/d4sk1l4_1.png)
+![d4sk1l4_2](/images/d4sk1l4_2.png)
+
+***sc-pic***
 
 ### 2. Labs on GLS and Synthesis-Simulation Mismatch
 
@@ -1057,22 +1065,61 @@ sc-pic
 To run GLS, we need netlist, 
 mux files
 rtl simul - 2x1 MUX
+
+![d4sk2l1_1](/images/d4sk2l1_1.png)
+![d4sk2l1_2](/images/d4sk2l1_2.png)
+![d4sk2l1_3](/images/d4sk2l1_3.png)
+![d4sk2l1_4](/images/d4sk2l1_4.png)
+![d4sk2l1_5](/images/d4sk2l1_5.png)
+![d4sk2l1_6](/images/d4sk2l1_6.png)
+![d4sk2l1_7](/images/d4sk2l1_7.png)
+![d4sk2l1_8](/images/d4sk2l1_8.png)
+
 synth -yosys
 show -> drawpic
+
+![d4sk2l1_9](/images/d4sk2l1_9.png)
+![d4sk2l1_10](/images/d4sk2l1_10.png)
+![d4sk2l1_11](/images/d4sk2l1_11.png)
+![d4sk2l1_12](/images/d4sk2l1_12.png)
+![d4sk2l1_13](/images/d4sk2l1_13.png)
+![d4sk2l1_14](/images/d4sk2l1_14.png)
+
 GLS
 2 files needed to read std cell models
 GLS output
 
-addsc sc-pic
+![d4sk2l1_15](/images/d4sk2l1_15.png)
+![d4sk2l1_16](/images/d4sk2l1_16.png)
+
+****addsc sc-pic***
 
 #### 2b. Lab GLS Synth Sim Mismatch part2
 
 bad_mux
 rtl simul -> flop kind of behavior
+
+![d4sk2l2_1](/images/d4sk2l2_1.png)
+![d4sk2l2_2](/images/d4sk2l2_2.png)
+![d4sk2l2_3](/images/d4sk2l2_3.png)
+
 synth 
 simul-synth mismatch due to missing sensitivity list
 
-addsc sc-pic
+![d4sk2l2_4](/images/d4sk2l2_4.png)
+![d4sk2l2_5](/images/d4sk2l2_5.png)
+![d4sk2l2_6](/images/d4sk2l2_6.png)
+![d4sk2l2_7](/images/d4sk2l2_7.png)
+![d4sk2l2_8](/images/d4sk2l2_8.png)
+![d4sk2l2_9](/images/d4sk2l2_9.png)
+
+GLS
+
+![d4sk2l2_10](/images/d4sk2l2_10.png)
+![d4sk2l2_11](/images/d4sk2l2_11.png)
+![d4sk2l2_12](/images/d4sk2l2_12.png)
+
+***addsc sc-pic***
 
 ### 3. Labs on synth-sim mismatch for blocking statement
 
@@ -1081,16 +1128,36 @@ addsc sc-pic
 blocking_caveaat.v
 iverilog
 
-addsc sc-pic
+![d4sk3l1_1](/images/d4sk3l1_1.png)
+![d4sk3l1_2](/images/d4sk3l1_2.png)
+![d4sk3l1_3](/images/d4sk3l1_3.png)
+![d4sk3l1_4](/images/d4sk3l1_4.png)
+![d4sk3l1_5](/images/d4sk3l1_5.png)
+![d4sk3l1_6](/images/d4sk3l1_6.png)
+
+***addsc sc-pic***
 
 #### 3b. Lab Synth sim mismatch blocking statement part2
 
 synth
 show -> no latch
+
+![d4sk3l2_1](/images/d4sk3l2_1.png)
+![d4sk3l2_2](/images/d4sk3l2_2.png)
+![d4sk3l2_3](/images/d4sk3l2_3.png)
+![d4sk3l2_4](/images/d4sk3l2_4.png)
+![d4sk3l2_5](/images/d4sk3l2_5.png)
+
 GLS -> looks at instantaneous value whereas in simul it looked at the past value
 Synth-sim mismatch due to blocking statements (avoid B statements as much as possible)
 
-addsc
+![d4sk3l2_6](/images/d4sk3l2_6.png)
+![d4sk3l2_7](/images/d4sk3l2_7.png)
+![d4sk3l2_8](/images/d4sk3l2_8.png)
+![d4sk3l2_9](/images/d4sk3l2_9.png)
+![d4sk3l2_10](/images/d4sk3l2_10.png)
+
+***addsc***
 
 ## 5. If, case, for loop and for generate
 
@@ -1104,7 +1171,11 @@ So a combi ckt will add a latch(to retain the value of y).
 Note: Combi ckt cannot have inferred latches.
 **For a negative D latch to go into latch state, EN should be low.
 For a D latch,  if EN is 1, ip passes to op. if en is 0, latch holds its op.
-sc-pic
+
+![d5sk1l1_1](/images/d5sk1l1_1.png)
+![d5sk1l1_2](/images/d5sk1l1_2.png)
+
+***sc-pic***
 
 #### 1b. IF CASE Constructs part2
 
@@ -1116,7 +1187,11 @@ Case statement: (if and case are used inside always block and var used for if an
 Caveats with Case:
 1. Incomplete case statement - leads to inferred latches - to avoid incomplete cases, code case with default
 
-sc-pic
+![d5sk1l2_1](/images/d5sk1l2_1.png)
+![d5sk1l2_2](/images/d5sk1l2_2.png)
+![d5sk1l2_3](/images/d5sk1l2_3.png)
+
+***sc-pic***
 
 #### 1c. IF CASE Constructs part3
 
@@ -1131,30 +1206,71 @@ If there is a bad case statement like 2'b1? -> this can cause unpredictable outp
 Like 2'b1? can be called when sel=10 or 11.
 Note: should not have overlapping case statements
 
-sc-pic
+![d5sk1l3_1](/images/d5sk1l3_1.png)
+![d5sk1l3_2](/images/d5sk1l3_2.png)
+
+***sc-pic***
 
 ### 2. Labs on Incomplete If Case
 
 #### 2a. Lab Incomplete IF part1
 
 incomp files gvim
+
+![d5sk2l1_2](/images/d5sk2l1_2.png)
+
 incompif
 If always translates into a MUX. 
 Pos D latch
-rtl 
+rtl
+
+![d5sk2l1_1](/images/d5sk2l1_1.png)
+![d5sk2l1_3](/images/d5sk2l1_3.png)
+![d5sk2l1_4](/images/d5sk2l1_4.png)
+![d5sk2l1_5](/images/d5sk2l1_5.png)
+![d5sk2l1_6](/images/d5sk2l1_6.png)
+![d5sk2l1_7](/images/d5sk2l1_7.png)
+![d5sk2l1_8](/images/d5sk2l1_8.png)
+
 synth show
 tool infers a latch instead of a mux because of incomp if
 
-addsc sc-pic
+![d5sk2l1_9](/images/d5sk2l1_9.png)
+![d5sk2l1_10](/images/d5sk2l1_10.png)
+![d5sk2l1_11](/images/d5sk2l1_11.png)
+![d5sk2l1_12](/images/d5sk2l1_12.png)
+![d5sk2l1_13](/images/d5sk2l1_13.png)
+![d5sk2l1_14](/images/d5sk2l1_14.png)
+
+***addsc sc-pic***
 
 #### 2b. Lab Incomplete IF part2
 
 incompif2
+
+![d5sk2l2_1](/images/d5sk2l2_1.png)
+![d5sk2l2_2](/images/d5sk2l2_2.png)
+
 rtl
+
+![d5sk2l2_3](/images/d5sk2l2_3.png)
+![d5sk2l2_4](/images/d5sk2l2_4.png)
+![d5sk2l2_5](/images/d5sk2l2_5.png)
+![d5sk2l2_6](/images/d5sk2l2_6.png)
+![d5sk2l2_7](/images/d5sk2l2_7.png)
+![d5sk2l2_8](/images/d5sk2l2_8.png)
+![d5sk2l2_9](/images/d5sk2l2_9.png)
+
 synth
 if both i0 and i2 are 0 then it latches (pos latch)
 
-addsc sc-pic
+![d5sk2l2_10](/images/d5sk2l2_10.png)
+![d5sk2l2_11](/images/d5sk2l2_11.png)
+![d5sk2l2_12](/images/d5sk2l2_12.png)
+![d5sk2l2_13](/images/d5sk2l2_13.png)
+![d5sk2l2_14](/images/d5sk2l2_14.png)
+
+***addsc sc-pic***
 
 ### 3. Labs on Incomplete overlapping Case
 
@@ -1166,24 +1282,85 @@ en = !sel[1]
 so in transparent mode, en=1. in latch mode, en=0.
 
 rtl
+
+![d5sk3l1_1](/images/d5sk3l1_1.png)
+![d5sk3l1_2](/images/d5sk3l1_2.png)
+![d5sk3l1_3](/images/d5sk3l1_3.png)
+![d5sk3l1_4](/images/d5sk3l1_4.png)
+![d5sk3l1_5](/images/d5sk3l1_5.png)
+![d5sk3l1_6](/images/d5sk3l1_6.png)
+![d5sk3l1_7](/images/d5sk3l1_7.png)
+![d5sk3l1_8](/images/d5sk3l1_8.png)
+![d5sk3l1_9](/images/d5sk3l1_9.png)
+![d5sk3l1_10](/images/d5sk3l1_10.png)
+![d5sk3l1_11](/images/d5sk3l1_11.png)
+![d5sk3l1_12](/images/d5sk3l1_12.png)
+
 synth
 
-addsc sc-pic
+![d5sk3l1_13](/images/d5sk3l1_13.png)
+![d5sk3l1_14](/images/d5sk3l1_14.png)
+![d5sk3l1_15](/images/d5sk3l1_15.png)
+![d5sk3l1_16](/images/d5sk3l1_16.png)
+![d5sk3l1_17](/images/d5sk3l1_17.png)
+
+***addsc sc-pic***
 
 #### 3b. Lab incomplete overlapping Case part2
 
 compcase
 No latch
+
+![d5sk3l2_1](/images/d5sk3l2_1.png)
+
 rtl
+
+![d5sk3l2_3](/images/d5sk3l2_3.png)
+![d5sk3l2_4](/images/d5sk3l2_4.png)
+![d5sk3l2_5](/images/d5sk3l2_5.png)
+![d5sk3l2_6](/images/d5sk3l2_6.png)
+![d5sk3l2_7](/images/d5sk3l2_7.png)
+![d5sk3l2_8](/images/d5sk3l2_8.png)
+![d5sk3l2_9](/images/d5sk3l2_9.png)
+![d5sk3l2_10](/images/d5sk3l2_10.png)
+
 synth - no latches inferred - 4x1MUX
+
+![d5sk3l2_11](/images/d5sk3l2_11.png)
+![d5sk3l2_12](/images/d5sk3l2_12.png)
+![d5sk3l2_13](/images/d5sk3l2_13.png)
+![d5sk3l2_14](/images/d5sk3l2_14.png)
+![d5sk3l2_15](/images/d5sk3l2_15.png)
+![d5sk3l2_16](/images/d5sk3l2_16.png)
+![d5sk3l2_17](/images/d5sk3l2_17.png)
 
 partialcase gvim
 
-addsc sc-pic
+![d5sk3l2_2](/images/d5sk3l2_2.png)
+![d5sk3l2_18](/images/d5sk3l2_18.png)
+![d5sk3l2_19](/images/d5sk3l2_19.png)
+![d5sk3l2_20](/images/d5sk3l2_20.png)
+![d5sk3l2_21](/images/d5sk3l2_21.png)
+![d5sk3l2_22](/images/d5sk3l2_22.png)
+![d5sk3l2_23](/images/d5sk3l2_23.png)
+![d5sk3l2_24](/images/d5sk3l2_24.png)
+![d5sk3l2_25](/images/d5sk3l2_25.png)
+
+***addsc sc-pic***
 
 #### 3c. Lab incomplete overlapping Case part3
 
 synth - only 1 latch for x
+
+![d5sk3l3_2](/images/d5sk3l3_2.png)
+![d5sk3l3_3](/images/d5sk3l3_3.png)
+![d5sk3l3_4](/images/d5sk3l3_4.png)
+![d5sk3l3_5](/images/d5sk3l3_5.png)
+![d5sk3l3_6](/images/d5sk3l3_6.png)
+![d5sk3l3_7](/images/d5sk3l3_7.png)
+![d5sk3l3_17](/images/d5sk3l3_17.png)
+![d5sk3l3_19](/images/d5sk3l3_19.png)
+![d5sk3l3_20](/images/d5sk3l3_20.png)
 
 badcase
 tool gets confused
@@ -1191,14 +1368,39 @@ diff simulators behave differently because this is not expected
 synthesizer will choose the most optimum solution
 rtl
 
-addsc sc-pic
+![d5sk3l3_1](/images/d5sk3l3_1.png)
+![d5sk3l3_8](/images/d5sk3l3_8.png)
+![d5sk3l3_9](/images/d5sk3l3_9.png)
+![d5sk3l3_10](/images/d5sk3l3_10.png)
+![d5sk3l3_11](/images/d5sk3l3_11.png)
+![d5sk3l3_12](/images/d5sk3l3_12.png)
+![d5sk3l3_13](/images/d5sk3l3_13.png)
+![d5sk3l3_14](/images/d5sk3l3_14.png)
+![d5sk3l3_15](/images/d5sk3l3_15.png)
+![d5sk3l3_16](/images/d5sk3l3_16.png)
+
+<!--![d5sk3l3_18](/images/d5sk3l3_18.png)-->
+
+***addsc sc-pic***
 
 #### 3d. Lab incomplete overlapping Case part4
 
 synth - no inferred latches - prob with overlapping case - all cases should be mutually exclusive
 GLS
 
-addsc sc-pic
+![d5sk3l4_1](/images/d5sk3l4_1.png)
+![d5sk3l4_2](/images/d5sk3l4_2.png)
+![d5sk3l4_3](/images/d5sk3l4_3.png)
+![d5sk3l4_4](/images/d5sk3l4_4.png)
+![d5sk3l4_5](/images/d5sk3l4_5.png)
+![d5sk3l4_6](/images/d5sk3l4_6.png)
+![d5sk3l4_7](/images/d5sk3l4_7.png)
+![d5sk3l4_8](/images/d5sk3l4_8.png)
+![d5sk3l4_9](/images/d5sk3l4_9.png)
+![d5sk3l4_10](/images/d5sk3l4_10.png)
+![d5sk3l4_11](/images/d5sk3l4_11.png)
+
+***addsc sc-pic***
 
 ### 4. for loop and for generate
 
@@ -1211,7 +1413,10 @@ Looping constructs in verilog:
 2x1MUX 4x1MUX 32X1MUX
 If we need to instantiate multiple muxes in an efficient way, use generate for loop outside always block with blocking statements(executes line by line).
 
-sc-pic
+![d5sk4l1_1](/images/d5sk4l1_1.png)
+![d5sk4l1_2](/images/d5sk4l1_2.png)
+
+***sc-pic***
 
 #### 4b. For Loop and For Generate pa2t2
 
@@ -1221,13 +1426,18 @@ Demux - same case
 
 To generate multiple instances of a gate, use for generate(for replicating hardware).
 
-sc-pic
+![d5sk4l2_1](/images/d5sk4l2_1.png)
+![d5sk4l2_2](/images/d5sk4l2_2.png)
+
+***sc-pic***
 
 #### 4c. For Loop and For Generate pa3t3
 
 RCA
 
-sc-pic
+![d5sk4l3_1](/images/d5sk4l3_1.png)
+
+***sc-pic***
 
 ### 5. Labs on for loop and for generate
 
@@ -1239,7 +1449,24 @@ clk and reset are tb signals
 synth
 GLS
 
-sc-pic addsc
+![d5sk5l1_1](/images/d5sk5l1_1.png)
+![d5sk5l1_2](/images/d5sk5l1_2.png)
+![d5sk5l1_3](/images/d5sk5l1_3.png)
+![d5sk5l1_4](/images/d5sk5l1_4.png)
+![d5sk5l1_5](/images/d5sk5l1_5.png)
+![d5sk5l1_6](/images/d5sk5l1_6.png)
+![d5sk5l1_7](/images/d5sk5l1_7.png)
+![d5sk5l1_8](/images/d5sk5l1_8.png)
+![d5sk5l1_9](/images/d5sk5l1_9.png)
+![d5sk5l1_10](/images/d5sk5l1_10.png)
+![d5sk5l1_11](/images/d5sk5l1_11.png)
+![d5sk5l1_12](/images/d5sk5l1_12.png)
+![d5sk5l1_13](/images/d5sk5l1_13.png)
+![d5sk5l1_14](/images/d5sk5l1_14.png)
+![d5sk5l1_15](/images/d5sk5l1_15.png)
+![d5sk5l1_16](/images/d5sk5l1_16.png)
+
+***sc-pic addsc***
 
 #### 5b. Lab For and For Generate part2
 
@@ -1249,7 +1476,7 @@ rtl
 
 synth
 
-sc-pic addsc
+***sc-pic addsc***
 
 #### 5c. Lab For and For Generate part3
 
@@ -1266,7 +1493,7 @@ N bit + M bit = Max(N,M) + 1 bit
 Making 0th instance of FA 
 genvar - var used in for generate loop
 
-sc-pic addsc
+***sc-pic addsc***
 
 #### 5d. Lab For and For Generate part4
 
@@ -1277,4 +1504,4 @@ synth
 gls
 
 
-sc-pic addsc
+***sc-pic addsc***
